@@ -12,7 +12,7 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:4000/api/auth/signup", formData)
+    axios.post("https://quickride.onrender.com/api/auth/signup", formData)
       .then((res) => {
         login(res.data.token);
         navigate("/");

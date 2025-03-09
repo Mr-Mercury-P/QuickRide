@@ -10,7 +10,7 @@ const Bookings = () => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await fetch("http://localhost:4000/api/mycars/bookings", {
+        const response = await fetch("https://quickride.onrender.com/api/mycars/bookings", {
           headers: {
             Authorization: `Bearer ${token}`
           }
