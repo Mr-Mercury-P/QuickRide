@@ -80,4 +80,41 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+// ✅ Approve a booking
+router.patch('/:id/approve', async (req, res) => {
+    try {
+        const booking = await Booking.findById(req.params.id);
+        if (!booking) return res.status(404).json({ message: "Booking not found" });
+
+        if (booking.status === "Cancelled") {
+            return res.status(400).json({ message: "Cancelled booking cannot be approved" });
+        }
+
+        booking.status = "Confirmed";
+        await booking.save();
+        res.json({ message: "Booking approved successfully", booking });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// ✅ Reject a booking
+router.patch('/:id/reject', async (req, res) => {
+    try {
+        const booking = await Booking.findById(req.params.id);
+        if (!booking) return res.status(404).json({ message: "Booking not found" });
+
+        if (booking.status === "Confirmed") {
+            return res.status(400).json({ message: "Approved booking cannot be rejected" });
+        }
+
+        booking.status = "Cancelled";
+        await booking.save();
+        console.log("booking rejected");
+        res.json({ message: "Booking rejected successfully", booking });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = router;

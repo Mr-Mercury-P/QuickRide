@@ -10,7 +10,7 @@ const Bookings = () => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await fetch("https://quickride.onrender.com/api/mycars/bookings", {
+        const response = await fetch("http://localhost:5000/api/mycars/bookings", {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -33,6 +33,36 @@ const Bookings = () => {
 
     fetchBookings();
   }, [token]);
+
+  const handleApprove = async (bookingId) => {
+    await fetch(`http://localhost:5000/api/bookings/${bookingId}/approve`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setBookings(bookings.map(booking => booking._id === bookingId ? { ...booking, status: "approved" } : booking));
+  };
+
+  const handleReject = async (bookingId) => {
+    await fetch(`http://localhost:5000/api/bookings/${bookingId}/reject`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setBookings(bookings.map(booking => booking._id === bookingId ? { ...booking, status: "rejected" } : booking));
+  };
+
+  const handleDeleteCar = async (carId) => {
+    await fetch(`http://localhost:5000/api/cars/${carId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setCars(cars.filter(car => car._id !== carId));
+  };
 
   const containerStyles = {
     display: "flex",
@@ -70,6 +100,16 @@ const Bookings = () => {
     marginBottom: "0.5rem",
   };
 
+  const buttonStyles = {
+    margin: "0.5rem",
+    padding: "0.5rem 1rem",
+    cursor: "pointer",
+    border: "none",
+    borderRadius: "0.5rem",
+    backgroundColor: "#1E3A8A",
+    color: "#FFFFFF",
+  };
+
   return (
     <div style={containerStyles}>
       <h2 style={headingStyles}>My Car Bookings</h2>
@@ -83,6 +123,7 @@ const Bookings = () => {
         cars.map(car => (
           <div key={car._id} style={cardStyles}>
             <h3 style={{ color: "#1E3A8A", fontSize: "1.5rem", marginBottom: "0.5rem" }}>{car.brand} - {car.name}</h3>
+            <button style={buttonStyles} onClick={() => handleDeleteCar(car._id)}>Delete Car</button>
             <p style={{ fontWeight: "bold" }}>Bookings:</p>
             <ul style={{ paddingLeft: "1rem" }}>
               {bookings.filter(booking => booking.car === car._id).length === 0 ? (
@@ -96,6 +137,9 @@ const Bookings = () => {
                       <p>Email: {booking.user?.email || "No Email"}</p>
                       <p>Mobile: {booking.user?.mobile || "No Mobile"}</p>
                       <p>From: {new Date(booking.startDate).toLocaleDateString()} To: {new Date(booking.endDate).toLocaleDateString()}</p>
+                      <p>Status: {booking.status}</p>
+                      <button style={buttonStyles} onClick={() => handleApprove(booking._id)}>Approve</button>
+                      <button style={buttonStyles} onClick={() => handleReject(booking._id)}>Reject</button>
                     </li>
                   ))
               )}

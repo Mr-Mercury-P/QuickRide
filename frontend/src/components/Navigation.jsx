@@ -73,7 +73,7 @@ const Navigation = () => {
                             <Link to="/cars" style={linkStyles} onClick={() => setMenuOpen(false)}>Available Cars</Link>
                         </li>
                         <li>
-                            <Link to="/my-cars" style={linkStyles} onClick={() => setMenuOpen(false)}>Your Car Bookings</Link>
+                            <Link to="/my-cars" style={linkStyles} onClick={() => setMenuOpen(false)}>Your Cars</Link>
                         </li>
                         <li>
                             <Link to="/rent-my-car" style={linkStyles} onClick={() => setMenuOpen(false)}>Add Car</Link>

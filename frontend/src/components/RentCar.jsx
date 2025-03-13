@@ -32,7 +32,7 @@ const RentCar = () => {
     }
 
     try {
-      const response = await fetch("https://quickride.onrender.com/api/bookings", {
+      const response = await fetch("http://localhost:5000/api/bookings", {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ car: car._id, startDate, endDate }),

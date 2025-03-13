@@ -12,7 +12,7 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    axios.post("https://quickride.onrender.com/api/auth/login", formData)
+    axios.post("http://localhost:5000/api/auth/login", formData)
       .then((res) => {
         if (res.status === 200) {
           login(res.data.token);
