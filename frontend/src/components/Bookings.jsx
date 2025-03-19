@@ -10,7 +10,7 @@ const Bookings = () => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/mycars/bookings", {
+        const response = await fetch("https://quickride.onrender.com/api/mycars/bookings", {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -44,7 +44,7 @@ const Bookings = () => {
   
     setBookings(updatedBookings);
   
-    await fetch(`http://localhost:5000/api/bookings/${bookingId}/approve`, {
+    await fetch(`https://quickride.onrender.com/api/bookings/${bookingId}/approve`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -65,7 +65,7 @@ const Bookings = () => {
   
     setBookings(updatedBookings);
   
-    await fetch(`http://localhost:5000/api/bookings/${bookingId}/reject`, {
+    await fetch(`https://quickride.onrender.com/api/bookings/${bookingId}/reject`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -77,7 +77,7 @@ const Bookings = () => {
   };
   
   const handleDeleteCar = async (carId) => {
-    await fetch(`http://localhost:5000/api/cars/${carId}`, {
+    await fetch(`https://quickride.onrender.com/api/cars/${carId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,

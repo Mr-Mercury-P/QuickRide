@@ -30,7 +30,7 @@ const CarDetails = () => {
     const token = localStorage.getItem("token");
     if (!token) return alert("Unauthorized: Please log in first.");
     try {
-      const response = await axios.post("http://localhost:5000/api/cars", car, { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } });
+      const response = await axios.post("https://quickride.onrender.com/api/cars", car, { headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" } });
       alert("Car posted successfully!");
       console.log(response.data);
     } catch (error) {
