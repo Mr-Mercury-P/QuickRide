@@ -38,7 +38,7 @@ const RentCar = () => {
         body: JSON.stringify({ car: car._id, startDate, endDate }),
       });
       const result = await response.json();
-      setBookingMessage(response.ok ? `Booking confirmed for $${result.totalPrice}.` : result.message || "Booking failed.");
+      setBookingMessage(response.ok ? `Booking Pending for $${result.totalPrice} Waiting for approval` : result.message || "Booking failed.");
     } catch (error) {
       setBookingMessage("Error processing booking.");
     }

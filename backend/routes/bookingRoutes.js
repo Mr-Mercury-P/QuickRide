@@ -33,7 +33,7 @@ router.post('/', authMiddleware, async (req, res) => {
         const totalPrice = days * selectedCar.rentPerDay;
 
         // 📝 Create booking
-        const newBooking = new Booking({ car, user, startDate, endDate, totalPrice, status: "Confirmed" });
+        const newBooking = new Booking({ car, user, startDate, endDate, totalPrice, status: "Pending" });
         await newBooking.save();
         res.status(201).json(newBooking);
     } catch (error) {

@@ -35,25 +35,47 @@ const Bookings = () => {
   }, [token]);
 
   const handleApprove = async (bookingId) => {
+    const updatedBookings = bookings.map((booking) => {
+      if (booking._id === bookingId && booking.status === "Pending") {
+        return { ...booking, status: "Confirmed" };
+      }
+      return booking;
+    });
+  
+    setBookings(updatedBookings);
+  
     await fetch(`http://localhost:5000/api/bookings/${bookingId}/approve`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    setBookings(bookings.map(booking => booking._id === bookingId ? { ...booking, status: "approved" } : booking));
+  
+    // Re-fetch the latest bookings from the database to sync with the backend
+    fetchBookings();
   };
-
+  
   const handleReject = async (bookingId) => {
+    const updatedBookings = bookings.map((booking) => {
+      if (booking._id === bookingId && booking.status === "Pending") {
+        return { ...booking, status: "Cancelled" };
+      }
+      return booking;
+    });
+  
+    setBookings(updatedBookings);
+  
     await fetch(`http://localhost:5000/api/bookings/${bookingId}/reject`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    setBookings(bookings.map(booking => booking._id === bookingId ? { ...booking, status: "rejected" } : booking));
+  
+    // Re-fetch the latest bookings from the database to sync with the backend
+    fetchBookings();
   };
-
+  
   const handleDeleteCar = async (carId) => {
     await fetch(`http://localhost:5000/api/cars/${carId}`, {
       method: "DELETE",
